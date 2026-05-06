@@ -21,6 +21,10 @@ export class CreateAssessmentUseCase implements IUseCase<CreateAssessmentDTO, As
     return this.assessmentRepository.create(assessmentData);
   }
 
+  public async retrieve(): Promise<Assessment[]> {
+    return this.assessmentRepository.findAll();
+  }
+
   private validateScore(score: number): void {
     if (score < 0 || score > 5) {
       throw new Error(`Score must be between 0 and 5`);
