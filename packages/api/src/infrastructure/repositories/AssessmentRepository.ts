@@ -1,18 +1,25 @@
 import { IAssessmentRepository } from '../../application/contracts';
 import { Assessment as AssessmentType, CreateAssessmentDTO } from '../../types';
+import { Assessment as AssessmentModel } from '../sequelize/models/Assessment';
 
 export class AssessmentRepository implements IAssessmentRepository {
   public async create(assessmentData: CreateAssessmentDTO): Promise<AssessmentType> {
-    // TODO: Implement Create
-    return Promise.reject(new Error(`Not implemented`));
+    const createdAssessment = await AssessmentModel.create(assessmentData);
+
+    return createdAssessment.toJSON();
   }
 
   public async findAll(): Promise<AssessmentType[]> {
-    // TODO: Implement Find All
-    return Promise.reject(new Error(`Not implemented`));
+    const assessments = await AssessmentModel.findAll();
+
+    return assessments.map((assessment) => assessment.toJSON());
   }
 
   public async delete(id: number): Promise<boolean> {
-    return Promise.reject(new Error(`Not implemented`));
+    const deletedCount = await AssessmentModel.destroy({
+      where: { id },
+    });
+
+    return deletedCount > 0;
   }
 }

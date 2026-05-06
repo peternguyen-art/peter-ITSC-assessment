@@ -18,6 +18,7 @@ async function bootstrap() {
       console.log(`📚 API Documentation available at http://localhost:${PORT}/api`);
     });
   } catch (error) {
+    console.log(error);
     console.error(`Failed to start server:`, error);
     process.exit(1);
   }
