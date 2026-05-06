@@ -6,15 +6,20 @@ export class AssessmentRepository implements IAssessmentRepository {
   public async create(assessmentData: CreateAssessmentDTO): Promise<AssessmentType> {
     const createdAssessment = await AssessmentModel.create(assessmentData);
 
-    return createdAssessment.toJSON() as AssessmentType;
+    return createdAssessment.toJSON();
   }
 
   public async findAll(): Promise<AssessmentType[]> {
-    // TODO: Implement Find All
-    return Promise.reject(new Error(`Not implemented`));
+    const assessments = await AssessmentModel.findAll();
+
+    return assessments.map((assessment) => assessment.toJSON());
   }
 
   public async delete(id: number): Promise<boolean> {
-    return Promise.reject(new Error(`Not implemented`));
+    const deletedCount = await AssessmentModel.destroy({
+      where: { id },
+    });
+
+    return deletedCount > 0;
   }
 }
