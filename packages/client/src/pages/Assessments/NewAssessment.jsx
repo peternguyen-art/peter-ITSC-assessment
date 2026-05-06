@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   Badge,
   Button,
   Card,
@@ -55,9 +56,14 @@ const assessmentQuestions = [
 ];
 
 export const NewAssessment = () => {
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useForm({
     defaultValues: {
-      catDOB: "",
+      catDateOfBirth: "",
       catName: "",
       dogsBehavior: "0",
       ownerAltercations: "0",
@@ -66,8 +72,48 @@ export const NewAssessment = () => {
       catAltercations: "0",
     },
   });
+  const [submitError, setSubmitError] = React.useState("");
+  const [submitSuccess, setSubmitSuccess] = React.useState("");
+
+  const calculateScore = (data) => {
+    return assessmentQuestions.reduce((score, question) => {
+      return score + Number(data[question.name] ?? 0);
+    }, 0);
+  };
+
+  const getRiskLevel = (score) => {
+    if (score <= 1) {
+      return "low";
+    }
+
+    if (score <= 3) {
+      return "medium";
+    }
+
+    return "high";
+  };
+
   const onSubmit = async (data) => {
-    await AssessmentService.submit(data);
+    setSubmitError("");
+    setSubmitSuccess("");
+
+    try {
+      const score = calculateScore(data);
+
+      await AssessmentService.submit({
+        catDateOfBirth: data.catDateOfBirth,
+        catName: data.catName.trim(),
+        instrumentType: "Cat Behavioral Instrument",
+        riskLevel: getRiskLevel(score),
+        score,
+      });
+
+      reset();
+      setSubmitSuccess("Assessment submitted successfully.");
+    } catch (error) {
+      console.log(error);
+      setSubmitError(error?.response?.data?.message ?? error.message ?? "Unable to submit assessment.");
+    }
   };
 
   return (
@@ -91,6 +137,18 @@ export const NewAssessment = () => {
                 </div>
 
                 <Form onSubmit={handleSubmit(onSubmit)}>
+                  {submitError ? (
+                    <Alert className="mb-4" variant="danger">
+                      {submitError}
+                    </Alert>
+                  ) : null}
+
+                  {submitSuccess ? (
+                    <Alert className="mb-4" variant="success">
+                      {submitSuccess}
+                    </Alert>
+                  ) : null}
+
                   <Row className="g-3 mb-4">
                     <Col md={6}>
                       <Form.Group controlId="catName">
@@ -103,11 +161,11 @@ export const NewAssessment = () => {
                       </Form.Group>
                     </Col>
                     <Col md={6}>
-                      <Form.Group controlId="catDOB">
+                      <Form.Group controlId="catDateOfBirth">
                         <Form.Label>Cat&apos;s Date of Birth</Form.Label>
                         <Form.Control
                           type="date"
-                          {...register("catDOB")}
+                          {...register("catDateOfBirth")}
                         />
                       </Form.Group>
                     </Col>
@@ -147,8 +205,8 @@ export const NewAssessment = () => {
                   </div>
 
                   <div className="d-grid d-md-flex justify-content-md-end mt-4">
-                    <Button className="px-4 py-2" size="lg" type="submit" variant="dark">
-                      Submit assessment
+                    <Button className="px-4 py-2" disabled={isSubmitting} size="lg" type="submit" variant="dark">
+                      {isSubmitting ? "Submitting..." : "Submit assessment"}
                     </Button>
                   </div>
                 </Form>

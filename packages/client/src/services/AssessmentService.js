@@ -3,6 +3,7 @@ import Axios from '../utils/http.config';
 export class AssessmentService {
   static submit(assessment) {
     try {
+      console.log(assessment);
       return Axios.post(`/assessments`, assessment)
         .then((response) => response.data);
     } catch (err) {
