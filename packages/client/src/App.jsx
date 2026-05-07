@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     element: <SiteWrapper>
       <AssessmentList />
     </SiteWrapper>,
-    path: `/assessments`,
+    path: `/assessment/list`,
   },
 ]);
 

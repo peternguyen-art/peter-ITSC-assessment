@@ -35,6 +35,7 @@
     "typescript-eslint": "^8.40.0"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.21.3",
     "bootstrap": "^5.3.8",
     "react-bootstrap": "^2.10.10",
     "react-hook-form": "^7.75.0",

@@ -14,7 +14,6 @@ export class CreateAssessmentController extends BaseController {
   }
 
   protected async executeImpl(req: Request): Promise<any> {
-    console.log(`here`);
     const dto = createAssessmentSchema.validate(req.body);
 
     if (dto.error) {

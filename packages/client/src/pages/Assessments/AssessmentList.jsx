@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Badge, Card, Col, Container, Row, Table } from 'react-bootstrap';
-import { flexRender, getCoreRowModel, useReactTable } from 'react-table';
+import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { AssessmentService } from '../../services/AssessmentService';
 
 export const AssessmentList = () => {
