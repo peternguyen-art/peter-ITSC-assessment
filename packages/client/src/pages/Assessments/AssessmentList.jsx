@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Badge, Card, Col, Container, Row, Table } from 'react-bootstrap';
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { set } from 'react-hook-form';
 import { AssessmentService } from '../../services/AssessmentService';
 
 export const AssessmentList = () => {
   const [ assessments, setAssessments ] = useState([]);
   const [ isLoading, setIsLoading ] = useState(true);
+  const [ isDeletingId, setIsDeletingId ] = useState([]);
   const [ error, setError ] = useState(``);
 
   // fetch all assessments using the AssessmentService.getList function from OCAT/client/services/AssessmentService.js
@@ -51,6 +53,31 @@ export const AssessmentList = () => {
     });
   };
 
+  const handleDelete = async (assessmentId) => {
+    if (assessmentId == null) {
+      return;
+    }
+
+    if (!window.confirm(`Are you sure you want to delete this assessment? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      setIsDeletingId([ ...isDeletingId, assessmentId ]);
+      await AssessmentService.delete(assessmentId);
+      setAssessments(assessments.filter((assessment) => assessment.id !== assessmentId));
+      setError(``);
+    } catch (err) {
+      setError(
+        err?.response?.data?.message ??
+          err.message ??
+          `Failed to delete assessment`,
+      );
+    } finally {
+      setIsDeletingId(isDeletingId.filter((id) => id !== assessmentId));
+    }
+  };
+
   const columns = [
     {
       accessorKey: `catName`,
@@ -78,6 +105,20 @@ export const AssessmentList = () => {
       accessorKey: `createdAt`,
       cell: (info) => formatDate(info.getValue()),
       header: `Created`,
+    },
+    {
+      id: `actions`,
+      cell: (info) => {
+        const assessmentId = info.row.original.id;
+        return <button
+          className="btn btn-sm btn-danger"
+          onClick={() => handleDelete(assessmentId)}
+          disabled={isDeletingId.includes(assessmentId)}
+        >
+          {isDeletingId.includes(assessmentId) ? `Deleting...` : `Delete`}
+        </button>;
+      },
+      header: `Actions`,
     },
   ];
 
