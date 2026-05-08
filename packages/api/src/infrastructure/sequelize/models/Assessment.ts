@@ -19,7 +19,7 @@ export class Assessment extends Model<
   declare public catDateOfBirth: string;
   declare public createdAt: CreationOptional<Date>;
   declare public updatedAt: CreationOptional<Date>;
-  declare public deletedAt: Date | null;
+  declare public deletedAt: CreationOptional<Date | null>;
 }
 
 Assessment.init({
@@ -70,6 +70,8 @@ Assessment.init({
     type: DataTypes.DATE,
   },
 }, {
+  paranoid: true,
   sequelize,
   tableName: `assessments`,
+  timestamps: true,
 });

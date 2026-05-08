@@ -33,6 +33,7 @@ export class DeleteAssessmentController extends BaseController {
       id: assessmentId,
       deleted: true,
       message: `Assessment with ID ${assessmentId} deleted successfully`,
+      softDeleted: true,
     };
   }
 }
