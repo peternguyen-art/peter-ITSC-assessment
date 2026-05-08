@@ -3,7 +3,6 @@ export interface User {
   createdAt?: Date;
   deletedAt?: Date | null;
   firstName: string;
-  isSupervisor: boolean;
   lastName: string;
   password: string;
   updatedAt?: Date;
