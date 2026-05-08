@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { Request } from 'express';
-import { Assessment } from 'src/types';
+import { Assessment } from '../../../../types';
 import { BaseController } from '../../../../infrastructure/http/BaseController';
 import { GetAssessmentListUseCase } from './useCase';
 

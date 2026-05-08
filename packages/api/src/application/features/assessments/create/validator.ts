@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { CreateAssessmentDTO } from 'src/types';
+import { CreateAssessmentDTO } from '../../../../types';
 
 export const createAssessmentSchema = Joi.object<CreateAssessmentDTO>({
 

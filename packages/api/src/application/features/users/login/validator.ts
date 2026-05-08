@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { LoginDTO } from 'src/types';
+import { LoginDTO } from '../../../../types';
 
 export const loginSchema = Joi.object<LoginDTO>({
 

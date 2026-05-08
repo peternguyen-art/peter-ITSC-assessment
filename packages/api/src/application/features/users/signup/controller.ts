@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { Request } from 'express';
-import { SignupDTO } from 'src/types';
+import { SignupDTO } from '../../../../types';
 import { BaseController } from '../../../../infrastructure/http/BaseController';
 import { SignupUseCase } from './useCase';
 import { signupSchema } from './validator';

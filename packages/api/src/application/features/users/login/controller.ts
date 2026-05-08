@@ -1,8 +1,9 @@
 import { injectable } from 'inversify';
 import { Request } from 'express';
+import { LoginDTO } from '../../../../types';
 import { BaseController } from '../../../../infrastructure/http/BaseController';
 import { LoginUseCase } from './useCase';
-import { loginSchema, LoginResponse } from '../validator';
+import loginSchema from './validator';
 
 @injectable()
 export class LoginController extends BaseController {
@@ -12,15 +13,15 @@ export class LoginController extends BaseController {
     super();
   }
 
-  protected async executeImpl(req: Request): Promise<LoginResponse> {
+  protected async executeImpl(req: Request): Promise<any> {
     const dto = loginSchema.validate(req.body);
 
     if (dto.error) {
       throw new Error(`Validation error: ${dto.error.message}`);
     }
 
-    const user = await this.loginUseCase.execute(dto.value as any);
+    const assessment = await this.loginUseCase.execute(dto.value as LoginDTO);
 
-    return user;
+    return assessment;
   }
 }

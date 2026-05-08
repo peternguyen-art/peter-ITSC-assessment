@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { SignupDTO } from 'src/types';
+import { SignupDTO } from '../../../../types';
 
 export const signupSchema = Joi.object<SignupDTO>({
   firstName: Joi.string()

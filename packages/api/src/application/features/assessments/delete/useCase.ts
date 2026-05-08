@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { IUseCase } from 'src/types/shared';
+import { IUseCase } from '../../../../types/shared';
 import { IAssessmentRepository } from '../../../contracts';
 
 @injectable()

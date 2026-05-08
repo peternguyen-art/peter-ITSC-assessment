@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
-import { IUseCase } from 'src/types/shared';
-import { Assessment, CreateAssessmentDTO } from 'src/types';
+import { IUseCase } from '../../../../types/shared';
+import { Assessment, CreateAssessmentDTO } from '../../../../types';
 import { IAssessmentRepository } from '../../../contracts';
 
 @injectable()

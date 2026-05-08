@@ -1,4 +1,5 @@
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+/* eslint-disable no-unused-vars */
+import * as ReactRouterDom from 'react-router-dom';
 import { SiteWrapper } from './components';
 import { DashboardBulletin } from './pages/Dashboard/DashboardBulletin';
 import { NewAssessment } from './pages/Assessments/NewAssessment.jsx';
@@ -19,9 +20,9 @@ const assessmentListPage = <SiteWrapper>
   <AssessmentList />
 </SiteWrapper>;
 
-const router = createBrowserRouter([
+const router = ReactRouterDom.createBrowserRouter([
   {
-    element: <Navigate to="/login" replace />,
+    element: <ReactRouterDom.Navigate to="/login" replace />,
     path: `/`,
   },
   {
@@ -46,6 +47,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-const App = () => <RouterProvider router={router} />;
+const App = () => <ReactRouterDom.RouterProvider router={router} />;
 
 export default App;

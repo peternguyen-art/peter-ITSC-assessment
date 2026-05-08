@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { Request } from 'express';
-import { CreateAssessmentDTO } from 'src/types';
+import { CreateAssessmentDTO } from '../../../../types';
 import { BaseController } from '../../../../infrastructure/http/BaseController';
 import { CreateAssessmentUseCase } from './useCase';
 import { createAssessmentSchema } from './validator';

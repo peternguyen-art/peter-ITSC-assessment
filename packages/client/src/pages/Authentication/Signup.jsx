@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import * as ReactBootstrap from 'react-bootstrap';
+import * as ReactRouterDom from 'react-router-dom';
 import { getCurrentUser, setCurrentUser } from '../../utils/auth';
 import { UserService } from '../../services/UserService';
 
@@ -13,7 +14,7 @@ export const Signup = () => {
     username: ``,
   });
   const [ error, setError ] = useState(null);
-  const navigate = useNavigate();
+  const navigate = ReactRouterDom.useNavigate();
 
   useEffect(() => {
     if (getCurrentUser()) {
@@ -45,58 +46,87 @@ export const Signup = () => {
     }
   };
 
-  return <Card>
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label>First Name</Form.Label>
-        <Form.Control
-          name="firstName"
-          onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-          required
-        />
-      </Form.Group>
+  return <ReactBootstrap.Container className="py-5">
+    <ReactBootstrap.Row className="justify-content-center align-items-center min-vh-100">
+      <ReactBootstrap.Col md={10} lg={8} xl={7}>
+        <ReactBootstrap.Card className="border-0 shadow-lg overflow-hidden">
+          <div className="bg-primary text-white p-4 p-md-5">
+            <p className="text-uppercase small mb-2 opacity-75">Create your account</p>
+            <h1 className="h3 mb-2">Sign up for OCAT</h1>
+            <p className="mb-0 text-white-50">Get access to the assessment dashboard in a few quick steps.</p>
+          </div>
+          <ReactBootstrap.Card.Body className="p-4 p-md-5 bg-white">
+            <ReactBootstrap.Form onSubmit={handleSubmit} className="d-grid gap-3">
+              <ReactBootstrap.Row className="g-3">
+                <ReactBootstrap.Col md={6}>
+                  <ReactBootstrap.Form.Group>
+                    <ReactBootstrap.Form.Label>First Name</ReactBootstrap.Form.Label>
+                    <ReactBootstrap.Form.Control
+                      name="firstName"
+                      placeholder="First name"
+                      onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                      required
+                    />
+                  </ReactBootstrap.Form.Group>
+                </ReactBootstrap.Col>
+                <ReactBootstrap.Col md={6}>
+                  <ReactBootstrap.Form.Group>
+                    <ReactBootstrap.Form.Label>Last Name</ReactBootstrap.Form.Label>
+                    <ReactBootstrap.Form.Control
+                      name="lastName"
+                      placeholder="Last name"
+                      onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                      required
+                    />
+                  </ReactBootstrap.Form.Group>
+                </ReactBootstrap.Col>
+              </ReactBootstrap.Row>
 
-      <Form.Group>
-        <Form.Label>Last Name</Form.Label>
-        <Form.Control
-          name="lastName"
-          onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-          required
-        />
-      </Form.Group>
+              <ReactBootstrap.Form.Group>
+                <ReactBootstrap.Form.Label>Username</ReactBootstrap.Form.Label>
+                <ReactBootstrap.Form.Control
+                  name="username"
+                  placeholder="Choose a username"
+                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  required
+                />
+              </ReactBootstrap.Form.Group>
 
-      <Form.Group>
-        <Form.Label>Username</Form.Label>
-        <Form.Control
-          name="username"
-          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-          required
-        />
-      </Form.Group>
+              <ReactBootstrap.Row className="g-3">
+                <ReactBootstrap.Col md={6}>
+                  <ReactBootstrap.Form.Group>
+                    <ReactBootstrap.Form.Label>Password</ReactBootstrap.Form.Label>
+                    <ReactBootstrap.Form.Control
+                      name="password"
+                      type="password"
+                      placeholder="Minimum 8 characters"
+                      minLength={8}
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      required
+                    />
+                  </ReactBootstrap.Form.Group>
+                </ReactBootstrap.Col>
+                <ReactBootstrap.Col md={6}>
+                  <ReactBootstrap.Form.Group>
+                    <ReactBootstrap.Form.Label>Confirm Password</ReactBootstrap.Form.Label>
+                    <ReactBootstrap.Form.Control
+                      name="passwordConfirm"
+                      type="password"
+                      placeholder="Re-enter password"
+                      onChange={(e) => setFormData({ ...formData, passwordConfirm: e.target.value })}
+                      required
+                    />
+                  </ReactBootstrap.Form.Group>
+                </ReactBootstrap.Col>
+              </ReactBootstrap.Row>
 
-      <Form.Group>
-        <Form.Label>Password (min 8 chars)</Form.Label>
-        <Form.Control
-          name="password"
-          type="password"
-          minLength={8}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          required
-        />
-      </Form.Group>
+              {error ? <ReactBootstrap.Alert variant="danger" className="mb-0">{error}</ReactBootstrap.Alert> : null}
 
-      <Form.Group>
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control
-          name="passwordConfirm"
-          type="password"
-          onChange={(e) => setFormData({ ...formData, passwordConfirm: e.target.value })}
-          required
-        />
-      </Form.Group>
-
-      <Button type="submit">Create Account</Button>
-      {error ? <p>{error}</p> : null}
-    </Form>
-  </Card>;
+              <ReactBootstrap.Button type="submit" size="lg" className="w-100">Create Account</ReactBootstrap.Button>
+            </ReactBootstrap.Form>
+          </ReactBootstrap.Card.Body>
+        </ReactBootstrap.Card>
+      </ReactBootstrap.Col>
+    </ReactBootstrap.Row>
+  </ReactBootstrap.Container>;
 };
